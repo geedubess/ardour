@@ -1,0 +1,50 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "type": "shell",
+            "label": "configure ardour",
+            "command": "${workspaceFolder}/waf",
+            "args": [
+                "configure",
+                "--noconfirm",
+                "--libjack=weak",
+                "--no-phone-home",
+                "--use-external-libs",
+                "--cxx11",
+                "--ptformat",
+                "--with-backends=jack,dummy,alsa",
+                "--compile-database"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "detail": "configure ardour (run once)"
+        },
+        {
+           "type": "shell",
+           "label": "build ardour",
+           "command": "${workspaceFolder}/waf",
+           "args": [
+               "build"
+           ],
+           "options": {
+               "cwd": "${workspaceFolder}"
+           },
+            "problemMatcher": [
+                "$gcc"
+            ],
+           "group": {
+               "kind": "build",
+               "isDefault": true
+           },
+           "detail": "build ardour all"
+       }
+    ]
+}

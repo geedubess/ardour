@@ -1,0 +1,26 @@
+services:
+  app:
+    image: ardour-vscode
+    stdin_open: true # -i
+    tty: true # -t
+    build: .
+    user: ubuntu
+    working_dir: /ardour
+    environment:
+      - DISPLAY=unix${DISPLAY}
+    command: bash
+    volumes:
+      - type: bind
+        source: ../..          # map ardour tree
+        target: /ardour
+      - type: bind
+        source: /tmp/.X11-unix # allow X display
+        target: /tmp/.X11-unix
+      - type: bind
+        source: /dev/shm       # allow JACK access
+        target: /dev/shm
+    devices:
+      - /dev/snd:/dev/snd      # allow ALSA access
+    ulimits:
+      memlock: -1
+      rtprio: 95
